@@ -203,13 +203,13 @@
                     title: "🎮 TrainVie (C++ POO)",
                     description: "Jeu vidéo 2D dévelepper avec Elmehdi ELOUAFI, jeux de type 'Runner' symbolisant le parcours de la vie. Exploitation  de la POO (agrégation ,héritage, polymorphisme) avec gestion de collisions et génération dynamique d'obstacles.",
                     technologies: ["C++", "SFML", "CMake"],
-                    videoUrl: "trainvie_demo.mp4" // URL pour la modale
+                    videoUrl: "trainvie_demo.mp4" 
                 },
                 {
                     title: "💻 E-accent (Diagnostic Pédagogique)" ,
                     description: "Développement exclusif de la partie backend:Plateforme de diagnostic pédagogique pour bacheliers. l'Analyse des indicateurs de performance (temps de compréhension/réflexion) et génération de rapports de consolidation personnalisés",
                     technologies: ["HTML5", "CSS3", "JavaScript"],
-                    videoUrl: "demo-eaccent.mp4" // URL pour la modale
+                    videoUrl: "demo-eaccent.mp4" 
                 },
                 {
                     title: "🚀 Modèle HAGOUCH (EdTech) ... EN cours de réalisation", 
@@ -255,7 +255,7 @@
                             <ProjectCard 
                                 key={'tech-'+index} 
                                 {...item} 
-                                // Si videoUrl existe, on passe un gestionnaire qui met à jour l'état
+                                
                                 onWatchDemo={item.videoUrl ? () => setCurrentVideo(item.videoUrl) : null}
                             />
                         ))}

@@ -48,11 +48,21 @@ h1, h2, h3 { color: var(--primary-color); }
 }
 
 .profile-img {
-    width: 140px;
-    height: 140px;
+    
+    width: 280px; 
+    height: 280px; 
+
+    
+    object-fit: cover; 
+
+    object-position: center;
+
+    
     border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--accent-color);
+    border: 4px solid #ffffff; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    display: block;
+    margin: 0 auto; 
 }
 
 .job-title { font-size: 1.1rem; color: #cbd5e1; font-weight: 300; }
@@ -81,15 +91,15 @@ h1, h2, h3 { color: var(--primary-color); }
     color: var(--surface-color);
 }
 
-/* --- MAIN CONTAINER --- */
+
 .main-container {
     max-width: 900px;
-    margin: -2rem auto 2rem auto; /* Remonte légèrement sur le header */
+    margin: -2rem auto 2rem auto; 
     padding: 0 1rem;
     position: relative;
 }
 
-/* --- SECTIONS --- */
+
 .cv-section {
     background-color: var(--surface-color);
     padding: 2.5rem;
@@ -98,9 +108,9 @@ h1, h2, h3 { color: var(--primary-color); }
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-/* --- COMPÉTENCES (GRID & FLEX) --- */
+
 .skills-grid {
-    /* CSS GRID : Gère automatiquement les colonnes et le responsive ! */
+    
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
@@ -125,7 +135,7 @@ h1, h2, h3 { color: var(--primary-color); }
 }
 
 .soft-skills-flex {
-    /* FLEXBOX : Pour aligner les tags proprement */
+    
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
@@ -140,15 +150,14 @@ h1, h2, h3 { color: var(--primary-color); }
     font-weight: 600;
 }
 
-/* --- ACCORDÉON (Formation) --- */
-/* --- TIMELINE INTERACTIVE (FORMATION) --- */
+
 .timeline {
     position: relative;
     padding-left: 40px;
     margin-top: 1.5rem;
 }
 
-/* La ligne verticale */
+
 .timeline::before {
     content: '';
     position: absolute;
@@ -164,7 +173,7 @@ h1, h2, h3 { color: var(--primary-color); }
     margin-bottom: 1.5rem;
 }
 
-/* Le point sur la ligne */
+
 .timeline-dot {
     position: absolute;
     left: -40px;
@@ -178,7 +187,7 @@ h1, h2, h3 { color: var(--primary-color); }
     z-index: 1;
 }
 
-/* Changement de couleur quand l'élément est actif */
+
 .timeline-item.active .timeline-dot {
     border-color: var(--accent-color);
     box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
