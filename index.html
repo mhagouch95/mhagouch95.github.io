@@ -18,7 +18,7 @@
 
     <header class="hero-header">
         <div class="hero-content">
-            <img src="https://via.placeholder.com/150" alt="Portrait" class="profile-img">
+            <img src="photo-profil.jpg" alt="Portrait" class="profile-img">
             <h1>HAGOUCH Mohamed</h1>
             <p class="job-title">Ancien Enseignant de Physique-Chimie | Artiste de Théâtre | Étudiant en L2 Informatique</p>
             <nav class="social-links">
@@ -67,7 +67,7 @@
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-header"><span class="timeline-date">2025/2026</span><h3 class="timeline-title">L2 Informatique</h3><i class="fas fa-plus toggle-icon"></i></div>
-                        <div class="timeline-details"><p>Approfondissement en développement web,  structures de données en C ,programmation orientée objet en c++ et système d'exploitation.</p></div>
+                        <div class="timeline-details"><p>Approfondissement en développement web,  structures de données en C ,programmation orientée objet en c++ et système d'exploitation.</p></div>
                     </div>
                 </article>
                 <article class="timeline-item">
@@ -114,7 +114,47 @@
 
     <script type="text/babel">
         
-        const ProjectCard = ({ title, description, technologies, link }) => (
+        // --- 1. Composant pour le Lecteur Vidéo Modal (Nouveau) ---
+        const VideoModal = ({ videoUrl, onClose }) => {
+            const modalStyle = {
+                position: 'fixed',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                zIndex: 2000, padding: '20px'
+            };
+
+            const contentStyle = {
+                position: 'relative',
+                width: '100%', maxWidth: '800px',
+                backgroundColor: 'var(--card-bg)',
+                borderRadius: '12px', padding: '10px',
+                boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)'
+            };
+
+            const closeButtonStyle = {
+                position: 'absolute',
+                top: '-40px', right: '0',
+                background: 'none', border: 'none',
+                color: 'white', fontSize: '2rem',
+                cursor: 'pointer'
+            };
+
+            return (
+                <div style={modalStyle} onClick={onClose}>
+                    <div style={contentStyle} onClick={(e) => e.stopPropagation()}>
+                        <button style={closeButtonStyle} onClick={onClose}>&times;</button>
+                        <video controls autoPlay style={{ width: '100%', borderRadius: '8px', display: 'block' }}>
+                            <source src={videoUrl} type="video/mp4" />
+                            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+                        </video>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- 2. Composant Carte Projet (Modifié pour gérer l'ouverture de modale) ---
+        const ProjectCard = ({ title, description, technologies, link, onWatchDemo }) => (
             <div className="project-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <h3 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>{title}</h3>
                 <p style={{ color: 'var(--text-muted)', marginBottom: '15px', flexGrow: 1 }}>{description}</p>
@@ -123,74 +163,82 @@
                         <span key={index} className="tag" style={{ background: '#f1f5f9', color: 'var(--text-main)' }}>{tech}</span>
                     ))}
                 </div>
-                {link && (
-                    <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)', textDecoration: 'none', fontWeight: 'bold', display: 'block', marginTop: 'auto' }}>
-                        <i className="fas fa-external-link-alt"></i> Voir le projet
-                    </a>
-                )}
+                
+                <div style={{ marginTop: 'auto', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    {link && (
+                        <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)', textDecoration: 'none', fontWeight: 'bold', padding: '8px 0' }}>
+                            <i className="fas fa-external-link-alt"></i> Voir le projet
+                        </a>
+                    )}
+
+                    {onWatchDemo && (
+                        <button onClick={onWatchDemo} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 18px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '5px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+                            <i className="fas fa-play-circle" style={{ fontSize: '1.2rem' }}></i> Voir la Démo
+                        </button>
+                    )}
+                </div>
             </div>
         );
 
+        // --- 3. Composant Liste des Projets (Modifié pour gérer l'état de la modale) ---
         const ProjectsList = () => {
+            // État pour mémoriser quelle vidéo est en train de jouer (null = pas de vidéo)
+            const [currentVideo, setCurrentVideo] = React.useState(null);
+
             const globalExperiences = [
                 {
                     title: "👨‍🏫 Enseignant Physique-Chimie",
                     description: "4 ans d'enseignement dans le secteur privé. Élaboration de supports didactiques et gestion dynamique des classes.",
                     technologies: ["Pédagogie", "Sciences physiques", "Éducation"],
-                    link: ""
                 },
                 {
                     title: " Président de club de theatre de la FSSM ",
                     description: " écriture de pièces, scénographie, mise en scène et interprétation. J'ai également animer des ateliers de theatre dans des journées d'intégration pour les nouveaux bacheliers",
                     technologies: [ "Leadership","création artistique", "direction artistique", "Coordination"],
-                    link: ""
                 }
             ];
 
-          const techProjects = [
-    {
-        title: "🎮 TrainVie (C++ POO)",
-        description: "Jeu vidéo 2D de type 'Runner' symbolisant le parcours de la vie. Exploitation  de la POO (agrégation ,héritage, polymorphisme) avec gestion de collisions et génération dynamique d'obstacles.",
-        technologies: ["C++", "SFML", "CMake"],
-        //link: "https://github.com//trainvie"
-    },
-    {
-        title: "💻 E-accent (Diagnostic Pédagogique)" ,
-        description: "Développement exclusif de la partie backend:Plateforme de diagnostic pédagogique pour bacheliers. l'Analyse des indicateurs de performance (temps de compréhension/réflexion) et génération de rapports de consolidation personnalisés",
-        technologies: ["HTML5", "CSS3", "JavaScript"],
-        //link: "https://github.com//e-accent"
-    },
-    {
-        title: "🚀 Modèle HAGOUCH (EdTech) ... EN cours de réalisation", 
-        description: "Innovation pédagogique conçue pour automatiser le pilotage de l'apprentissage individuel après chaque séance. Ce modèle agit comme un tuteur intelligent capable d'éliminer les écarts de connaissances en guidant l'élève de la « mémoire brute » vers une rétention à long terme.Grâce à une analyse cognitive automatisée, le système classifie en temps réel les acquis selon trois axes (Lexique, Concept, Relation) pour générer un profil psychopédagogique détaillé. Ce dispositif permet une planification rigoureuse de la récupération des informations, offrant ainsi un outil d'accompagnement aussi précis qu'un enseignant ou un parent.", 
-        technologies: ["JavaScript "],
-        //link: "" 
-    }
-];
+            const techProjects = [
+                {
+                    title: "🎮 TrainVie (C++ POO)",
+                    description: "Jeu vidéo 2D dévelepper avec Elmehdi ELOUAFI, jeux de type 'Runner' symbolisant le parcours de la vie. Exploitation  de la POO (agrégation ,héritage, polymorphisme) avec gestion de collisions et génération dynamique d'obstacles.",
+                    technologies: ["C++", "SFML", "CMake"],
+                    videoUrl: "trainvie_demo.mp4" // URL pour la modale
+                },
+                {
+                    title: "💻 E-accent (Diagnostic Pédagogique)" ,
+                    description: "Développement exclusif de la partie backend:Plateforme de diagnostic pédagogique pour bacheliers. l'Analyse des indicateurs de performance (temps de compréhension/réflexion) et génération de rapports de consolidation personnalisés",
+                    technologies: ["HTML5", "CSS3", "JavaScript"],
+                    videoUrl: "demo-eaccent.mp4" // URL pour la modale
+                },
+                {
+                    title: "🚀 Modèle HAGOUCH (EdTech) ... EN cours de réalisation", 
+                    description: "Innovation pédagogique conçue pour automatiser le pilotage de l'apprentissage individuel après chaque séance. Ce modèle agit comme un tuteur intelligent capable d'éliminer les écarts de connaissances en guidant l'élève de la « mémoire brute » vers une rétention à long terme.Grâce à une analyse cognitive automatisée, le système classifie en temps réel les acquis selon trois axes (Lexique, Concept, Relation) pour générer un profil psychopédagogique détaillé. Ce dispositif permet une planification rigoureuse de la récupération des informations, offrant ainsi un outil d'accompagnement aussi précis qu'un enseignant ou un parent.", 
+                    technologies: ["JavaScript "],
+                    videoUrl: "modèlehagouch.mp4"
+                }
+            ];
+
             const artProjects = [
                 {
                     title: "🏆 Lmicro",
-                    description: "Performance théâtrale récompensée par le 1er Prix et un prix  du meilleur acteur lors du  festivale de créativité de l'UCA  2022.",
+                    description: "Performance théâtrale récompensée par le 1er Prix et un prix  du meilleur actor lors du  festivale de créativité de l'UCA  2022.",
                     technologies: ["prix d'acteur", "1er Prix"],
-                    link: ""
                 },
                 {
                     title: "🎭 L7it",
                     description: "Création théâtrale originale récompensée par le 3ème Prix lors de la compétition du festivale de créativité de l'UCA 2024.",
                     technologies: ["Mise en scène", "3ème Prix"],
-                    link: ""
                 },
                 {
                     title: "🎬 Screen",
                     description: "Projet théâtral récompensée par des prix de la Meilleure Réalisation et de la Meilleure Scénographie lors de festivale de theatre universitaire de l'UCA 2025.",
                     technologies: [" prix de Réalisation", "prix de Scénographie"],
-                    link: ""
                 },
                 {
                     title: "🤖 Dernière Impro (Pièce sur l'IA)",
                     description: "Spectacle d'improvisation   thématique explorant les interactions entre l'humain et l'Intelligence Artificielle;présenté lors de la semaine scientifique de la FSSM.",
                     technologies: ["Improvisation", "IA", "Théâtre"],
-                    link: ""
                 }
             ];
 
@@ -203,23 +251,33 @@
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-color)', marginBottom: '1rem' }}>Projets Informatiques</h3>
                     <div className="project-grid" style={{ marginBottom: '2.5rem' }}>
-                        {techProjects.map((item, index) => <ProjectCard key={'tech-'+index} {...item} />)}
+                        {techProjects.map((item, index) => (
+                            <ProjectCard 
+                                key={'tech-'+index} 
+                                {...item} 
+                                // Si videoUrl existe, on passe un gestionnaire qui met à jour l'état
+                                onWatchDemo={item.videoUrl ? () => setCurrentVideo(item.videoUrl) : null}
+                            />
+                        ))}
                     </div>
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-color)', marginBottom: '1rem' }}>Réalisations Artistiques & Théâtrales</h3>
                     <div className="project-grid">
                         {artProjects.map((item, index) => <ProjectCard key={'art-'+index} {...item} />)}
                     </div>
+
+                    {/* Rendu conditionnel de la modale vidéo --- */}
+                    {currentVideo && <VideoModal videoUrl={currentVideo} onClose={() => setCurrentVideo(null)} />}
                 </div>
             );
         };
 
         const ContactForm = () => (
             <form id="contact-form" style={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '600px', margin: '0 auto' }}>
-                <input type="text" id="name" placeholder="Votre Nom complet" style={{ padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
-                <input type="email" id="email" placeholder="Votre Email" style={{ padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
-                <textarea id="message" rows="5" placeholder="Votre Message..." style={{ padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', resize: 'vertical' }}></textarea>
-                <button type="submit" style={{ padding: '15px', backgroundColor: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>Envoyer le message</button>
+                <input type="text" id="name" placeholder="Votre Nom complet" required style={{ padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontFamily: 'Inter, sans-serif' }} />
+                <input type="email" id="email" placeholder="Votre Email" required style={{ padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontFamily: 'Inter, sans-serif' }} />
+                <textarea id="message" rows="5" placeholder="Votre Message..." required style={{ padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', resize: 'vertical', fontFamily: 'Inter, sans-serif' }}></textarea>
+                <button type="submit" style={{ padding: '15px', backgroundColor: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontFamily: 'Inter, sans-serif' }}>Envoyer le message</button>
             </form>
         );
 
