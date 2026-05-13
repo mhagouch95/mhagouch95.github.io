@@ -13,7 +13,7 @@ $(document).ready(function() {
         var windowHeight = $(window).height();
         var skillsTop = $('#skills').offset().top;
 
-        // Si l'utilisateur a scrollé jusqu'à la section des compétences
+        
         if (scrollPos + windowHeight > skillsTop + 100 && !skillsAnimated) {
             $('.progress').each(function() {
                 var targetWidth = $(this).attr('data-width');
@@ -21,7 +21,7 @@ $(document).ready(function() {
                 // Animation purement jQuery
                 $(this).animate({
                     width: targetWidth
-                }, 1500); // Durée : 1.5 secondes
+                }, 1500); 
             });
             skillsAnimated = true; // Empêche de relancer au prochain scroll
         }
@@ -40,9 +40,7 @@ $(document).ready(function() {
         }, 800); 
     });
 
-    /* 
-       3. ACCORDÉON INTERACTIF (FORMATION)
-       */
+    
  /* 
        3. TIMELINE / ACCORDÉON INTERACTIF (FORMATION)
         */
