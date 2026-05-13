@@ -1,0 +1,283 @@
+/* --- VARIABLES & RESET --- */
+:root {
+    --primary-color: #0f172a;    /* Bleu très foncé/Slate */
+    --accent-color: #3b82f6;     /* Bleu électrique */
+    --bg-color: #f8fafc;         /* Gris très clair */
+    --surface-color: #ffffff;    /* Blanc */
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --border-radius: 12px;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* --- TYPOGRAPHIE --- */
+h1, h2, h3 { color: var(--primary-color); }
+.section-title { font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+
+/* --- HEADER (FLEXBOX) --- */
+.hero-header {
+    background-color: var(--primary-color);
+    color: var(--surface-color);
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content {
+    /* Flexbox en colonne pour centrer le profil */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 800px;
+}
+
+.profile-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+}
+
+.job-title { font-size: 1.1rem; color: #cbd5e1; font-weight: 300; }
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: var(--primary-color);
+    background-color: var(--surface-color);
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background-color: var(--accent-color);
+    color: var(--surface-color);
+}
+
+/* --- MAIN CONTAINER --- */
+.main-container {
+    max-width: 900px;
+    margin: -2rem auto 2rem auto; /* Remonte légèrement sur le header */
+    padding: 0 1rem;
+    position: relative;
+}
+
+/* --- SECTIONS --- */
+.cv-section {
+    background-color: var(--surface-color);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* --- COMPÉTENCES (GRID & FLEX) --- */
+.skills-grid {
+    /* CSS GRID : Gère automatiquement les colonnes et le responsive ! */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.skill-item span { font-weight: 600; font-size: 0.95rem; }
+
+.progress-bar {
+    background: #e2e8f0;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.progress {
+    background: var(--accent-color);
+    width: 0; 
+    height: 100%;
+   
+}
+
+.soft-skills-flex {
+    /* FLEXBOX : Pour aligner les tags proprement */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.tag {
+    background: #eff6ff;
+    color: var(--accent-color);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* --- ACCORDÉON (Formation) --- */
+/* --- TIMELINE INTERACTIVE (FORMATION) --- */
+.timeline {
+    position: relative;
+    padding-left: 40px;
+    margin-top: 1.5rem;
+}
+
+/* La ligne verticale */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px; 
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e2e8f0;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+/* Le point sur la ligne */
+.timeline-dot {
+    position: absolute;
+    left: -40px;
+    top: 15px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--surface-color);
+    border: 4px solid #cbd5e1;
+    transition: var(--transition);
+    z-index: 1;
+}
+
+/* Changement de couleur quand l'élément est actif */
+.timeline-item.active .timeline-dot {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.timeline-content {
+    background: var(--bg-color);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.timeline-content:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.timeline-date {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.timeline-title {
+    font-size: 1.05rem;
+    color: var(--primary-color);
+    flex: 1;
+}
+
+.toggle-icon {
+    color: var(--accent-color);
+    transition: transform 0.3s ease;
+}
+
+/* Les détails masqués par défaut pour jQuery */
+.timeline-details {
+    display: none; 
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #cbd5e1;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.accordion-header {
+    padding: 1rem 1.5rem;
+    background: var(--bg-color);
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.accordion-content { padding: 1.5rem; display: none; border-top: 1px solid #e2e8f0; color: var(--text-muted); }
+
+/* PROJETS REACT (GRID) */
+.project-grid {
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
+}
+
+
+.site-footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+
+/* RESPONSIVE DESIGN (MEDIA QUERIES)  */
+@media (max-width: 768px) {
+    .hero-header { padding: 3rem 1rem; }
+    .hero-content h1 { font-size: 1.8rem; }
+    .cv-section { padding: 1.5rem; }
+    .main-container { margin-top: 1rem; }
+}
+
+/* Classes pour la validation jQuery */
+.error-border { border: 2px solid #ef4444 !important; }
