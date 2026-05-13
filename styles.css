@@ -1,9 +1,9 @@
-/* --- VARIABLES & RESET --- */
+
 :root {
-    --primary-color: #0f172a;    /* Bleu très foncé/Slate */
-    --accent-color: #3b82f6;     /* Bleu électrique */
-    --bg-color: #f8fafc;         /* Gris très clair */
-    --surface-color: #ffffff;    /* Blanc */
+    --primary-color: #0f172a;    
+    --accent-color: #3b82f6;     
+    --bg-color: #f8fafc;        
+    --surface-color: #ffffff;    
     --text-main: #334155;
     --text-muted: #64748b;
     --border-radius: 12px;
@@ -23,11 +23,11 @@ body {
     line-height: 1.6;
 }
 
-/* --- TYPOGRAPHIE --- */
+
 h1, h2, h3 { color: var(--primary-color); }
 .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
 
-/* --- HEADER (FLEXBOX) --- */
+
 .hero-header {
     background-color: var(--primary-color);
     color: var(--surface-color);
@@ -39,7 +39,7 @@ h1, h2, h3 { color: var(--primary-color); }
 }
 
 .hero-content {
-    /* Flexbox en colonne pour centrer le profil */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
